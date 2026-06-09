@@ -1,0 +1,52 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: bot-service
+
+  # ── Redis — sesiones de conversación ─────────────────────
+  data:
+    redis:
+      url: ${UPSTASH_REDIS_URL:rediss://default:gQAAAAAAAhneAAIgcDFhNGEyM2IzY2JiNzY0NzlmOGRhYzI3NWQ3NDUyNGYzZA@keen-impala-137694.upstash.io:6379}
+      ssl:
+        enabled: ${UPSTASH_REDIS_SSL:true}
+
+  # ── Kafka ────────────────────────────────────────────────
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:19092}
+    properties:
+      #sasl.mechanism: ${KAFKA_SASL_MECHANISM:SCRAM-SHA-256}
+      sasl.mechanism: ""
+      security.protocol: PLAINTEXT
+      #sasl.jaas.config: ${KAFKA_SASL_JAAS:}
+
+# ── WhatsApp Business API (Meta Cloud) ───────────────────
+whatsapp:
+  phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:1131751816692532}
+  access-token:    ${WHATSAPP_ACCESS_TOKEN:EAAOVEyyTvIcBRtlg8eNM9nPZANDZAf63PH8y17vwZBdZArueKZBLi9qlX2ScpeRcOwVPM5ZA4QuIMPGnFkIV0PdjGJDvndsG4BgqyZCGiJKA20cIlwai21O4UfCmOypjB48YldK4a1KxJLoFy6wNF7gFTj9iqKm7PgwrQsIhPHzzsZAIV6ZBMCZBVhaR4qdqgZBa54d3bR0ylJJUgzrqRV8VRu63MxQR4dq0NFAcHPQmSNfxiCjhYbmSZAAOK4yUSaZAk92pijvigdXocC6pnf4KltckXuIcQ4wZDZD}
+  verify-token:    ${WHATSAPP_VERIFY_TOKEN:reparaya-webhook-2026}
+  business-account-id: ${WHATSAPP_BUSINESS_ACCOUNT_ID:1131440080054091}
+
+# ── Actuator ─────────────────────────────────────────────
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+# ── OpenAPI ───────────────────────────────────────────────
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+# ── Logging ───────────────────────────────────────────────
+logging:
+  level:
+    pe.edu.reparaya: DEBUG
+    org.springframework.kafka: INFO
